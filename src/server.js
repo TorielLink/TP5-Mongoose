@@ -1,14 +1,16 @@
-import Fastify from "fastify";
+import { app } from "./config/config.js";
 
 const port = 3000;
 
-const fastify = Fastify({ logger: true });
+function main() {
+  app.listen({ port }, (err, address) => {
+    if (err) {
+      app.log.error(err);
+      process.exit(1);
+    }
 
-fastify.listen({ port }, (err, address) => {
-  if (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
+    app.log.info(`Fastify is listening on port: ${address}`);
+  });
+}
 
-  fastify.log.info(`Fastify is listening on port: ${address}`);
-});
+main();
